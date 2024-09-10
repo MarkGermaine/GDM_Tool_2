@@ -7,7 +7,10 @@ import pandas as pd
 preprocessor = joblib.load('preprocessor_gdm.pkl')
 model = joblib.load('best_logistic_regression_model.pkl')
 
-st.title("Gestational Diabetes Prediction Tool")
+# Add Coombe Logo at the Top
+st.image('coombe.png', use_column_width=True)  # Adjust the logo size based on the image dimensions
+
+st.markdown("### Gestational Diabetes Prediction Tool")
 
 # Capture unique identifier (optional, used for tracking purposes)
 study_id = st.text_input('Study Participant ID', '')
@@ -84,3 +87,6 @@ if st.button('Predict Gestational Diabetes'):
     
     except Exception as e:
         st.write(f"Error during preprocessing or prediction: {str(e)}")
+
+# Add CRT Machine Learning Banner at the Bottom
+st.image('CRT Machine Learning Lock Up Banner 10-07-20.jpeg', use_column_width=True)
