@@ -2,7 +2,6 @@ import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 
 # Load the saved preprocessor and model
 preprocessor = joblib.load('preprocessor_gdm.pkl')
@@ -54,12 +53,12 @@ parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=2
 
 # Button to make prediction
 if st.button('Predict Gestational Diabetes'):
-    # Create a DataFrame for the input data with corrected column names
+    # Create a DataFrame for the input data with exact column names that the preprocessor expects
     input_data = pd.DataFrame({
         'Ethnic Origin of Patient': [ethnic_origin],
         'FH Diabetes': [fh_diabetes],
         'Age at booking': [age_at_booking],
-        'Skill Level': [skill_level],  # Now passing the numeric value
+        'Skill Level': [skill_level],  # Passing the numeric value
         'Hx_GDM': [hx_gdm],
         'BMI': [bmi],
         'Other Endocrine probs': [other_endocrine_probs],
@@ -67,13 +66,16 @@ if st.button('Predict Gestational Diabetes'):
         'Diastolic BP at booking': [diastolic_bp],  # Corrected column name
         'Parity (not inc.multiple)': [parity]
     })
+
+    # Debugging: Display the input data structure
+    st.write("Input data before preprocessing:")
+    st.write(input_data)
     
     # Apply the saved preprocessor to the input data
-    try:
-        input_data_processed = preprocessor.transform(input_data)
+    input_data_processed = preprocessor.transform(input_data)
 
-        # Make prediction using the saved model
-        prediction = model.predict(input_data_processed)
+    # Make prediction using the saved model
+    prediction = model.predict(input_data_processed)
 
-        # Display the result
-        st.write(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
+    # Display the result
+    st.write(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
