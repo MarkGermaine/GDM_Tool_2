@@ -1,9 +1,8 @@
 streamlit
 pandas
-numpy
+numpy>=1.23.0
 scikit-learn==1.5.1
 joblib
 setuptools
 wheel
-distutils
-pip==24.2
+pip>=24.2
