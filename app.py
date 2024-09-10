@@ -22,11 +22,11 @@ age_at_booking = st.number_input('Age at Booking', min_value=18, max_value=50, s
 
 # Skill level (0-4 with description)
 skill_level_display = st.selectbox('Skill Level', 
-                           ['0 - Unemployed', 
-                            '1 - Elementary occupations', 
-                            '2 - Clerical support workers/Skilled workers/Assemblers',
-                            '3 - Technicians', 
-                            '4 - Managers and Professionals'])
+                                   ['0 - Unemployed', 
+                                    '1 - Elementary occupations', 
+                                    '2 - Clerical support workers/Skilled workers/Assemblers',
+                                    '3 - Technicians', 
+                                    '4 - Managers and Professionals'])
 
 # Extract the numeric value from skill level
 skill_level = int(skill_level_display.split(" ")[0])
@@ -44,10 +44,10 @@ fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['YES', '
 other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['YES', 'NO'])
 
 # Systolic BP at booking (integer)
-systolic_bp = st.number_input('Systolic Blood Pressure at booking', min_value=20, max_value=200, step=1)
+systolic_bp = st.number_input('Systolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
 
 # Diastolic BP at booking (integer)
-diastolic_bp = st.number_input('Diastolic Blood Pressure at booking', min_value=20, max_value=200, step=1)
+diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
 
 # Parity (integer)
 parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1)
@@ -59,20 +59,23 @@ if st.button('Predict Gestational Diabetes'):
         'Ethnic Origin of Patient': [ethnic_origin],
         'FH Diabetes': [fh_diabetes],
         'Age at booking': [age_at_booking],
-        'Skill Level': [skill_level],
+        'Skill Level': [skill_level],  # Now passing the numeric value
         'Hx_GDM': [hx_gdm],
         'BMI': [bmi],
         'Other Endocrine probs': [other_endocrine_probs],
-        'Systolic BP at booking': [systolic_bp],  # Matching column name
-        'Diastolic BP at booking': [diastolic_bp],  # Matching column name
+        'Systolic BP at Booking': [systolic_bp],
+        'Diastolic BP at Booking': [diastolic_bp],
         'Parity (not inc.multiple)': [parity]
     })
     
     # Apply the saved preprocessor to the input data
-    input_data_processed = preprocessor.transform(input_data)
+    try:
+        input_data_processed = preprocessor.transform(input_data)
 
-    # Make prediction using the saved model
-    prediction = model.predict(input_data_processed)
+        # Make prediction using the saved model
+        prediction = model.predict(input_data_processed)
 
-    # Display the result
-    st.write(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
+        # Display the result
+        st.write(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
+    except ValueError as e:
+        st.error(f"Error in preprocessing: {e}")
