@@ -75,6 +75,12 @@ if st.button('Predict Gestational Diabetes'):
         prediction = model.predict(input_data_processed)
 
         # Display the result
-        st.success(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
+        if prediction == 1:
+            st.error(f'Prediction for Study ID {study_id}: HIGH Risk of Gestational Diabetes')
+            st.write("This result indicates a high risk of developing gestational diabetes. We recommend consulting with a healthcare provider for further assessment.")
+        else:
+            st.success(f'Prediction for Study ID {study_id}: LOW Risk of Gestational Diabetes')
+            st.write("This result indicates a low risk of developing gestational diabetes. Please follow regular prenatal care.")
+    
     except Exception as e:
         st.write(f"Error during preprocessing or prediction: {str(e)}")
