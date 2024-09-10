@@ -53,8 +53,13 @@ skill_level = int(skill_level_display.split(" ")[0])
 hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['YES', 'NO'])
 hx_gdm_numeric = 1 if hx_gdm == 'YES' else 0
 
-# BMI (stored as float64)
-bmi = st.number_input('BMI', min_value=15.0, max_value=50.0, step=0.1)
+# Collect Height and Weight, then calculate BMI
+height_cm = st.number_input('Height (in cm)', min_value=100.0, max_value=250.0, step=0.1)
+weight_kg = st.number_input('Weight (in kg)', min_value=30.0, max_value=200.0, step=0.1)
+
+# Calculate BMI: BMI = weight (kg) / (height (m)^2)
+bmi = weight_kg / ((height_cm / 100) ** 2)
+st.write(f'Calculated BMI: {bmi:.2f}')
 
 # FH Diabetes (stored as object)
 fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['YES', 'NO'])
@@ -62,6 +67,13 @@ fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['YES', '
 # Other Endocrine problems (stored as int64: 1 for YES, 0 for NO)
 other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['YES', 'NO'])
 other_endocrine_probs_numeric = 1 if other_endocrine_probs == 'YES' else 0
+with st.expander("What are considered 'Other Endocrine Problems'?"):
+    st.markdown("""
+    Other endocrine problems include conditions such as:
+    - **PCOS** (Polycystic Ovary Syndrome)
+    - **Thyroid problems** (e.g., hypothyroidism, hyperthyroidism)
+    - Any other endocrine-related disorders
+    """)
 
 # Systolic BP at booking (stored as int64)
 systolic_bp = st.number_input('Systolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
