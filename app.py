@@ -71,11 +71,16 @@ if st.button('Predict Gestational Diabetes'):
     st.write("Input data before preprocessing:")
     st.write(input_data)
     
-    # Apply the saved preprocessor to the input data
-    input_data_processed = preprocessor.transform(input_data)
+    try:
+        # Apply the saved preprocessor to the input data
+        input_data_processed = preprocessor.transform(input_data)
 
-    # Make prediction using the saved model
-    prediction = model.predict(input_data_processed)
+        # Make prediction using the saved model
+        prediction = model.predict(input_data_processed)
 
-    # Display the result
-    st.write(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
+        # Display the result
+        st.write(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
+    
+    except Exception as e:
+        # Display error message for debugging purposes
+        st.error(f"Error during preprocessing or prediction: {e}")
