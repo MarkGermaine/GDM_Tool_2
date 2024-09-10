@@ -1,112 +1,75 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "b5e91597-03f8-42a0-99bc-8ad9050c205f",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import streamlit as st\n",
-    "import joblib\n",
-    "import numpy as np\n",
-    "import pandas as pd\n",
-    "from sklearn.preprocessing import StandardScaler\n",
-    "\n",
-    "# Load the saved preprocessor and model\n",
-    "preprocessor = joblib.load('preprocessor_gdm.pkl')\n",
-    "model = joblib.load('best_logistic_regression_model.pkl')\n",
-    "\n",
-    "st.title(\"Gestational Diabetes Prediction Tool\")\n",
-    "\n",
-    "# Capture unique identifier (optional, used for tracking purposes)\n",
-    "study_id = st.text_input('Study Participant ID', '')\n",
-    "\n",
-    "# Ethnic origin selection\n",
-    "ethnic_origin = st.selectbox('Ethnic Origin of Patient', \n",
-    "                             ['CAUCASIAN', 'SOUTH EAST ASIAN', 'OTHER', 'BLACK', 'ASIAN', 'MIDDLE EASTERN'])\n",
-    "\n",
-    "# Age at booking (integer)\n",
-    "age_at_booking = st.number_input('Age at Booking', min_value=18, max_value=50, step=1)\n",
-    "\n",
-    "# Skill level (0-4 with description)\n",
-    "skill_level = st.selectbox('Skill Level', \n",
-    "                           ['0 - Unemployed', \n",
-    "                            '1 - Elementary occupations', \n",
-    "                            '2 - Clerical support workers/Skilled workers/Assemblers',\n",
-    "                            '3 - Technicians', \n",
-    "                            '4 - Managers and Professionals'])\n",
-    "\n",
-    "# Hx_GDM (YES/NO)\n",
-    "hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['YES', 'NO'])\n",
-    "\n",
-    "# BMI (float)\n",
-    "bmi = st.number_input('BMI', min_value=15.0, max_value=50.0, step=0.1)\n",
-    "\n",
-    "# FH Diabetes (YES/NO)\n",
-    "fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['YES', 'NO'])\n",
-    "\n",
-    "# Other Endocrine problems (YES/NO)\n",
-    "other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['YES', 'NO'])\n",
-    "\n",
-    "# Systolic BP at booking (integer)\n",
-    "systolic_bp = st.number_input('Systolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)\n",
-    "\n",
-    "# Diastolic BP at booking (integer)\n",
-    "diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)\n",
-    "\n",
-    "# Calculate MAP (mean arterial pressure) based on systolic and diastolic BP\n",
-    "#map_value = (systolic_bp + 2 * diastolic_bp) / 3\n",
-    "\n",
-    "# Parity (integer)\n",
-    "parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1)\n",
-    "\n",
-    "# Button to make prediction\n",
-    "if st.button('Predict Gestational Diabetes'):\n",
-    "    # Create a DataFrame for the input data\n",
-    "    input_data = pd.DataFrame({\n",
-    "        'Ethnic Origin of Patient': [ethnic_origin],\n",
-    "        'FH Diabetes': [fh_diabetes],\n",
-    "        'Age at booking': [age_at_booking],\n",
-    "        'Skill Level': [skill_level],\n",
-    "        'Hx_GDM': [hx_gdm],\n",
-    "        'BMI': [bmi],\n",
-    "        'Other Endocrine probs': [other_endocrine_probs],\n",
-    "        'Systolic BP at Booking': [systolic_bp],\n",
-    "        'Diastolic BP at Booking' : [diastolic_bp],\n",
-    "        'Parity (not inc.multiple)': [parity]\n",
-    "    })\n",
-    "    \n",
-    "    # Apply the saved preprocessor to the input data\n",
-    "    input_data_processed = preprocessor.transform(input_data)\n",
-    "\n",
-    "    # Make prediction using the saved model\n",
-    "    prediction = model.predict(input_data_processed)\n",
-    "\n",
-    "    # Display the result\n",
-    "    st.write(f'Prediction for Study ID {study_id}: {\"Gestational Diabetes\" if prediction == 1 else \"No Gestational Diabetes\"}')"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.8.8"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+import streamlit as st
+import joblib
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+# Load the saved preprocessor and model
+preprocessor = joblib.load('preprocessor_gdm.pkl')
+model = joblib.load('best_logistic_regression_model.pkl')
+
+st.title("Gestational Diabetes Prediction Tool")
+
+# Capture unique identifier (optional, used for tracking purposes)
+study_id = st.text_input('Study Participant ID', '')
+
+# Ethnic origin selection
+ethnic_origin = st.selectbox('Ethnic Origin of Patient', 
+                             ['CAUCASIAN', 'SOUTH EAST ASIAN', 'OTHER', 'BLACK', 'ASIAN', 'MIDDLE EASTERN'])
+
+# Age at booking (integer)
+age_at_booking = st.number_input('Age at Booking', min_value=18, max_value=50, step=1)
+
+# Skill level (0-4 with description)
+skill_level = st.selectbox('Skill Level', 
+                           ['0 - Unemployed', 
+                            '1 - Elementary occupations', 
+                            '2 - Clerical support workers/Skilled workers/Assemblers',
+                            '3 - Technicians', 
+                            '4 - Managers and Professionals'])
+
+# Hx_GDM (YES/NO)
+hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['YES', 'NO'])
+
+# BMI (float)
+bmi = st.number_input('BMI', min_value=15.0, max_value=50.0, step=0.1)
+
+# FH Diabetes (YES/NO)
+fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['YES', 'NO'])
+
+# Other Endocrine problems (YES/NO)
+other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['YES', 'NO'])
+
+# Systolic BP at booking (integer)
+systolic_bp = st.number_input('Systolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
+
+# Diastolic BP at booking (integer)
+diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
+
+# Parity (integer)
+parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1)
+
+# Button to make prediction
+if st.button('Predict Gestational Diabetes'):
+    # Create a DataFrame for the input data
+    input_data = pd.DataFrame({
+        'Ethnic Origin of Patient': [ethnic_origin],
+        'FH Diabetes': [fh_diabetes],
+        'Age at booking': [age_at_booking],
+        'Skill Level': [skill_level],
+        'Hx_GDM': [hx_gdm],
+        'BMI': [bmi],
+        'Other Endocrine probs': [other_endocrine_probs],
+        'Systolic BP at Booking': [systolic_bp],
+        'Diastolic BP at Booking': [diastolic_bp],
+        'Parity (not inc.multiple)': [parity]
+    })
+    
+    # Apply the saved preprocessor to the input data
+    input_data_processed = preprocessor.transform(input_data)
+
+    # Make prediction using the saved model
+    prediction = model.predict(input_data_processed)
+
+    # Display the result
+    st.write(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
