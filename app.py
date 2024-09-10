@@ -54,7 +54,7 @@ parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=2
 
 # Button to make prediction
 if st.button('Predict Gestational Diabetes'):
-    # Create a DataFrame for the input data
+    # Create a DataFrame for the input data with corrected column names
     input_data = pd.DataFrame({
         'Ethnic Origin of Patient': [ethnic_origin],
         'FH Diabetes': [fh_diabetes],
@@ -63,8 +63,8 @@ if st.button('Predict Gestational Diabetes'):
         'Hx_GDM': [hx_gdm],
         'BMI': [bmi],
         'Other Endocrine probs': [other_endocrine_probs],
-        'Systolic BP at Booking': [systolic_bp],
-        'Diastolic BP at Booking': [diastolic_bp],
+        'Systolic BP at booking': [systolic_bp],  # Corrected column name
+        'Diastolic BP at booking': [diastolic_bp],  # Corrected column name
         'Parity (not inc.multiple)': [parity]
     })
     
