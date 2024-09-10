@@ -41,10 +41,10 @@ fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['YES', '
 other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['YES', 'NO'])
 
 # Systolic BP at booking (integer)
-systolic_bp = st.number_input('Systolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
+systolic_bp = st.number_input('Systolic Blood Pressure at booking', min_value=20, max_value=200, step=1)
 
 # Diastolic BP at booking (integer)
-diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
+diastolic_bp = st.number_input('Diastolic Blood Pressure at booking', min_value=20, max_value=200, step=1)
 
 # Parity (integer)
 parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1)
@@ -60,8 +60,8 @@ if st.button('Predict Gestational Diabetes'):
         'Hx_GDM': [hx_gdm],
         'BMI': [bmi],
         'Other Endocrine probs': [other_endocrine_probs],
-        'Systolic BP at Booking': [systolic_bp],
-        'Diastolic BP at Booking': [diastolic_bp],
+        'Systolic BP at booking': [systolic_bp],  # Matching column name
+        'Diastolic BP at booking': [diastolic_bp],  # Matching column name
         'Parity (not inc.multiple)': [parity]
     })
     
