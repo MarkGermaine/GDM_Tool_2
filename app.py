@@ -18,6 +18,15 @@ study_id = st.text_input('Study Participant ID', '')
 # Ethnic origin selection (stored as object in model)
 ethnic_origin = st.selectbox('Ethnic Origin of Patient', 
                              ['CAUCASIAN', 'SOUTH EAST ASIAN', 'OTHER', 'BLACK', 'ASIAN', 'MIDDLE EASTERN'])
+with st.expander("What does each ethnicity represent?"):
+    st.markdown("""
+    - **Caucasian**: All white Europeans and Northern Americans
+    - **Black**: All Africans and Afro-Caribbean
+    - **South East Asian**: Includes Pakistan, India, Malaysia, Singapore, etc.
+    - **Asian**: Includes China, Japan, North and South Korea, Mongolia, etc.
+    - **Middle Eastern**: Middle East and Northern African regions
+    - **Other**: All other ethnicities (e.g., Latin American, Mixed, etc.)
+    """)
 
 # Age at booking (stored as int64)
 age_at_booking = st.number_input('Age at Booking', min_value=18, max_value=50, step=1)
@@ -29,6 +38,15 @@ skill_level_display = st.selectbox('Skill Level',
                                     '2 - Clerical support workers/Skilled workers/Assemblers',
                                     '3 - Technicians', 
                                     '4 - Managers and Professionals'])
+with st.expander("What do the skill levels represent?"):
+    st.markdown("""
+    - **Skill Level 4**: Professionals and Managers (ISCO classification)
+    - **Skill Level 3**: Technicians
+    - **Skill Level 2**: Clerical Workers, Service/Sales workers, Skilled agriculture/forestry/fishery, Crafts and tradesmen, and Plant machine operators
+    - **Skill Level 1**: Elementary occupations
+    - **Skill Level 0**: Unemployed
+    """)
+
 skill_level = int(skill_level_display.split(" ")[0])
 
 # Hx_GDM (stored as int64: 1 for YES, 0 for NO)
