@@ -6,3 +6,4 @@ joblib
 setuptools
 wheel
 distutils
+pip==24.2
