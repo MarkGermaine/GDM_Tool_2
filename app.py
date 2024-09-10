@@ -77,5 +77,3 @@ if st.button('Predict Gestational Diabetes'):
 
         # Display the result
         st.write(f'Prediction for Study ID {study_id}: {"Gestational Diabetes" if prediction == 1 else "No Gestational Diabetes"}')
-    except ValueError as e:
-        st.error(f"Error in preprocessing: {e}")
