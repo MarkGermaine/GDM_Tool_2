@@ -15,6 +15,34 @@ st.markdown("### Gestational Diabetes Prediction Tool")
 # Capture unique identifier (optional, used for tracking purposes)
 study_id = st.text_input('Study Participant ID', '')
 
+# Collect Height and Weight, then calculate BMI
+height_cm = st.number_input('Height (in cm)', min_value=100.0, max_value=250.0, step=0.1)
+weight_kg = st.number_input('Weight (in kg)', min_value=30.0, max_value=200.0, step=0.1)
+
+# Calculate BMI: BMI = weight (kg) / (height (m)^2)
+bmi = weight_kg / ((height_cm / 100) ** 2)
+st.write(f'Calculated BMI: {bmi:.2f}')
+
+# Age at booking (stored as int64)
+age_at_booking = st.number_input('Age at Booking', min_value=18, max_value=50, step=1)
+
+# Systolic BP at booking (stored as int64)
+systolic_bp = st.number_input('Systolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
+
+# Diastolic BP at booking (stored as float64)
+diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
+
+# Parity (stored as int64)
+parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1)
+
+# Hx_GDM (stored as int64: 1 for YES, 0 for NO)
+hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['YES', 'NO'])
+hx_gdm_numeric = 1 if hx_gdm == 'YES' else 0
+
+
+# FH Diabetes (stored as object)
+fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['YES', 'NO'])
+
 # Ethnic origin selection (stored as object in model)
 ethnic_origin = st.selectbox('Ethnic Origin of Patient', 
                              ['CAUCASIAN', 'SOUTH EAST ASIAN', 'OTHER', 'BLACK', 'ASIAN', 'MIDDLE EASTERN'])
@@ -28,8 +56,6 @@ with st.expander("What does each ethnicity represent?"):
     - **Other**: All other ethnicities (e.g., Latin American, Mixed, etc.)
     """)
 
-# Age at booking (stored as int64)
-age_at_booking = st.number_input('Age at Booking', min_value=18, max_value=50, step=1)
 
 # Skill level (stored as int64)
 skill_level_display = st.selectbox('Skill Level', 
@@ -49,21 +75,6 @@ with st.expander("What do the skill levels represent?"):
 
 skill_level = int(skill_level_display.split(" ")[0])
 
-# Hx_GDM (stored as int64: 1 for YES, 0 for NO)
-hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['YES', 'NO'])
-hx_gdm_numeric = 1 if hx_gdm == 'YES' else 0
-
-# Collect Height and Weight, then calculate BMI
-height_cm = st.number_input('Height (in cm)', min_value=100.0, max_value=250.0, step=0.1)
-weight_kg = st.number_input('Weight (in kg)', min_value=30.0, max_value=200.0, step=0.1)
-
-# Calculate BMI: BMI = weight (kg) / (height (m)^2)
-bmi = weight_kg / ((height_cm / 100) ** 2)
-st.write(f'Calculated BMI: {bmi:.2f}')
-
-# FH Diabetes (stored as object)
-fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['YES', 'NO'])
-
 # Other Endocrine problems (stored as int64: 1 for YES, 0 for NO)
 other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['YES', 'NO'])
 other_endocrine_probs_numeric = 1 if other_endocrine_probs == 'YES' else 0
@@ -75,14 +86,6 @@ with st.expander("What are considered 'Other Endocrine Problems'?"):
     - Any other endocrine-related disorders
     """)
 
-# Systolic BP at booking (stored as int64)
-systolic_bp = st.number_input('Systolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
-
-# Diastolic BP at booking (stored as float64)
-diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=20, max_value=200, step=1)
-
-# Parity (stored as int64)
-parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1)
 
 # Button to make prediction
 if st.button('Predict Gestational Diabetes'):
