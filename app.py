@@ -8,7 +8,7 @@ preprocessor = joblib.load('preprocessor_gdm.pkl')
 model = joblib.load('best_logistic_regression_model.pkl')
 
 # Add Coombe Logo at the Top
-st.image('coombe.png', use_column_width=True)  # Adjust the logo size based on the image dimensions
+st.image('coombe2.jpeg', use_column_width=True)  # Adjust the logo size based on the image dimensions
 
 st.markdown("### Gestational Diabetes Prediction Tool")
 
