@@ -3,3 +3,5 @@ pandas
 numpy
 scikit-learn==1.2.1
 joblib
+setuptools
+wheel
