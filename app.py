@@ -21,7 +21,7 @@ ethnic_origin = st.selectbox('Ethnic Origin of Patient',
 age_at_booking = st.number_input('Age at Booking', min_value=18, max_value=50, step=1)
 
 # Skill level (0-4 with description)
-skill_level = st.selectbox('Skill Level', 
+skill_level_display = st.selectbox('Skill Level', 
                            ['0 - Unemployed', 
                             '1 - Elementary occupations', 
                             '2 - Clerical support workers/Skilled workers/Assemblers',
