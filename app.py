@@ -28,6 +28,9 @@ skill_level = st.selectbox('Skill Level',
                             '3 - Technicians', 
                             '4 - Managers and Professionals'])
 
+# Extract the numeric value from skill level
+skill_level = int(skill_level_display.split(" ")[0])
+
 # Hx_GDM (YES/NO)
 hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['YES', 'NO'])
 
