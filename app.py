@@ -36,7 +36,7 @@ diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=
 parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1)
 
 # New Section for Clinician's Prediction
-clinician_prediction = st.selectbox('Clinician Prediction of Gestational Diabetes', ['High Risk', 'Low Risk'])
+clinician_prediction = st.selectbox('Clinician Prediction of Gestational Diabetes', ['High Risk', 'Low Risk'], key='clinician_prediction')
 clinician_prediction_value = 1 if clinician_prediction == 'High Risk' else 0  # 1 for High Risk, 0 for Low Risk
 
 # Hx_GDM (stored as int64: 1 for YES, 0 for NO)
