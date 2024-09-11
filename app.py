@@ -35,6 +35,10 @@ diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=
 # Parity (stored as int64)
 parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1)
 
+# New Section for Clinician's Prediction
+clinician_prediction = st.selectbox('Clinician Prediction of Gestational Diabetes', ['High Risk', 'Low Risk'])
+clinician_prediction_value = 1 if clinician_prediction == 'High Risk' else 0  # 1 for High Risk, 0 for Low Risk
+
 # Hx_GDM (stored as int64: 1 for YES, 0 for NO)
 hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['YES', 'NO'])
 hx_gdm_numeric = 1 if hx_gdm == 'YES' else 0
@@ -86,6 +90,16 @@ with st.expander("What are considered 'Other Endocrine Problems'?"):
     - Any other endocrine-related disorders
     """)
 
+# New Section for Clinician's Prediction with expander
+with st.expander("What should the clinician's prediction be based on?"):
+    st.markdown("""
+    The clinician should assess the patient's overall risk factors and make a prediction based on clinical judgment.
+    This prediction should reflect whether the clinician believes the patient is at **High Risk** or **Low Risk** for developing GDM based on risk factors and clinical assessment.
+    """)
+
+clinician_prediction = st.selectbox('Clinician Prediction of Gestational Diabetes', ['High Risk', 'Low Risk'])
+clinician_prediction_value = 1 if clinician_prediction == 'High Risk' else 0  # 1 for High Risk, 0 for Low Risk
+
 
 # Button to make prediction
 if st.button('Predict Gestational Diabetes'):
@@ -120,6 +134,25 @@ if st.button('Predict Gestational Diabetes'):
     
     except Exception as e:
         st.write(f"Error during preprocessing or prediction: {str(e)}")
+    
+    # Store inputs, prediction (binary 0/1), and clinician's prediction in DataFrame for download
+    input_data['Prediction'] = prediction  # Storing 0 or 1 for the ML prediction
+    input_data['Clinician Prediction'] = clinician_prediction_value  # Storing 0 or 1 for clinician's prediction
+    input_data['Study Participant ID'] = study_id
+
+
+    # Convert DataFrame to CSV
+    csv = input_data.to_csv(index=False)
+    csv_file = StringIO(csv)
+
+    # Download button for CSV file
+    st.download_button(
+        label="Download Results as CSV",
+        data=csv_file.getvalue(),
+        file_name=f'GDM_prediction_{study_id}.csv',
+        mime='text/csv'
+    )
+
 
 # Add CRT Machine Learning Banner at the Bottom
 st.image('CRT Machine Learning Lock Up Banner 10-07-20.jpeg', use_column_width=True)
