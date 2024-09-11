@@ -91,14 +91,14 @@ with st.expander("What are considered 'Other Endocrine Problems'?"):
     """)
 
 # New Section for Clinician's Prediction with expander
+clinician_prediction = st.selectbox('Clinician Prediction of Gestational Diabetes', ['High Risk', 'Low Risk'])
+clinician_prediction_value = 1 if clinician_prediction == 'High Risk' else 0  # 1 for High Risk, 0 for Low Risk
+
 with st.expander("What should the clinician's prediction be based on?"):
     st.markdown("""
     The clinician should assess the patient's overall risk factors and make a prediction based on clinical judgment.
     This prediction should reflect whether the clinician believes the patient is at **High Risk** or **Low Risk** for developing GDM based on risk factors and clinical assessment.
     """)
-
-clinician_prediction = st.selectbox('Clinician Prediction of Gestational Diabetes', ['High Risk', 'Low Risk'])
-clinician_prediction_value = 1 if clinician_prediction == 'High Risk' else 0  # 1 for High Risk, 0 for Low Risk
 
 
 # Button to make prediction
