@@ -2,6 +2,7 @@ import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
+from io import StringIO
 
 # Load the saved preprocessor and model
 preprocessor = joblib.load('preprocessor_gdm.pkl')
