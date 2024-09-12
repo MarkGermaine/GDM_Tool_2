@@ -156,7 +156,7 @@ if st.button('Predict Gestational Diabetes'):
     # Store only study_id, prediction (binary 0/1), and clinician's prediction in a new DataFrame for S3
     output_data = pd.DataFrame({
         'Study Participant ID': [study_id],
-        'Prediction': [prediction],  # Storing 0 or 1 for the ML prediction
+        'ML Prediction': [prediction],  # Storing 0 or 1 for the ML prediction
         'Clinician Prediction': [clinician_prediction_value]  # Storing 0 or 1 for clinician's prediction
     })
 
