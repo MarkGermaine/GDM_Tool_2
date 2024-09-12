@@ -3,10 +3,30 @@ import joblib
 import numpy as np
 import pandas as pd
 from io import StringIO
+import boto3
 
 # Load the saved preprocessor and model
 preprocessor = joblib.load('preprocessor_gdm.pkl')
 model = joblib.load('best_logistic_regression_model.pkl')
+
+
+# Set up AWS S3 credentials
+ACCESS_KEY = 'your-access-key'
+SECRET_KEY = 'your-secret-key'
+BUCKET_NAME = 'gdmtool'
+
+# Initialize Boto3 S3 client
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id=ACCESS_KEY,
+    aws_secret_access_key=SECRET_KEY
+)
+
+def upload_to_s3(data, file_name):
+    csv_buffer = StringIO()
+    data.to_csv(csv_buffer)
+    s3_client.put_object(Bucket=BUCKET_NAME, Key=file_name, Body=csv_buffer.getvalue())
+    st.success(f'File {file_name} uploaded to S3 successfully!')
 
 # Add Coombe Logo at the Top
 st.image('coombe2.jpeg', use_column_width=True)  # Adjust the logo size based on the image dimensions
@@ -132,23 +152,30 @@ if st.button('Predict Gestational Diabetes'):
     except Exception as e:
         st.write(f"Error during preprocessing or prediction: {str(e)}")
     
-    # Store inputs, prediction (binary 0/1), and clinician's prediction in DataFrame for download
-    input_data['Prediction'] = prediction  # Storing 0 or 1 for the ML prediction
-    input_data['Clinician Prediction'] = clinician_prediction_value  # Storing 0 or 1 for clinician's prediction
-    input_data['Study Participant ID'] = study_id
+    
+    # Store only study_id, prediction (binary 0/1), and clinician's prediction in a new DataFrame for S3
+    output_data = pd.DataFrame({
+        'Study Participant ID': [study_id],
+        'Prediction': [prediction],  # Storing 0 or 1 for the ML prediction
+        'Clinician Prediction': [clinician_prediction_value]  # Storing 0 or 1 for clinician's prediction
+    })
 
+    # Upload to S3
+    csv_file_name = f'GDM_prediction_{study_id}.csv'
+    upload_to_s3(output_data, csv_file_name)  # Uploading only the required columns to S3
 
-    # Convert DataFrame to CSV
+    # Convert full input DataFrame to CSV for download
     csv = input_data.to_csv(index=False)
     csv_file = StringIO(csv)
 
-    # Download button for CSV file
+    # Download button for CSV file (includes full input data)
     st.download_button(
         label="Download Results as CSV",
         data=csv_file.getvalue(),
         file_name=f'GDM_prediction_{study_id}.csv',
         mime='text/csv'
     )
+
 
 
 # Add CRT Machine Learning Banner at the Bottom
