@@ -12,7 +12,7 @@ model = joblib.load('best_logistic_regression_model.pkl')
 
 # Access AWS credentials securely from Streamlit secrets
 ACCESS_KEY = st.secrets["AWS_ACCESS_KEY_ID"]
-SECRET_KEY = st.secrets["AWS_SECRET_ACCESS_KEY"]'
+SECRET_KEY = st.secrets["AWS_SECRET_ACCESS_KEY"]
 BUCKET_NAME = 'gdmtool'
 
 # Initialize Boto3 S3 client
