@@ -6,3 +6,4 @@ joblib
 setuptools
 wheel
 pip>=24.2
+boto3
