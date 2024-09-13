@@ -40,9 +40,12 @@ study_id = st.text_input('Study Participant ID', '')
 height_cm = st.number_input('Height (in cm)', min_value=100.0, max_value=250.0, step=0.1, value=None)
 weight_kg = st.number_input('Weight (in kg)', min_value=30.0, max_value=200.0, step=0.1, value=None)
 
-# Calculate BMI: BMI = weight (kg) / (height (m)^2)
-bmi = weight_kg / ((height_cm / 100) ** 2)
-st.write(f'Calculated BMI: {bmi:.2f}')
+# Check if height and weight are entered before calculating BMI
+if height_cm and weight_kg:
+    bmi = weight_kg / ((height_cm / 100) ** 2)
+    st.write(f'Calculated BMI: {bmi:.2f}')
+else:
+    bmi = None
 
 # Age at booking (stored as int64)
 age_at_booking = st.number_input('Age at Booking', min_value=18, max_value=50, step=1, value=None)
