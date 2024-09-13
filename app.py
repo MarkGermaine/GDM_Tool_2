@@ -26,7 +26,7 @@ def upload_to_s3(data, file_name):
     csv_buffer = StringIO()
     data.to_csv(csv_buffer)
     s3_client.put_object(Bucket=BUCKET_NAME, Key=file_name, Body=csv_buffer.getvalue())
-    st.markdown(f'File {file_name} uploaded to S3 successfully')
+    st.write(f'File {file_name} uploaded to S3 successfully')
 
 # Add Coombe Logo at the Top
 st.image('coombe2.jpeg', use_column_width=True)  # Adjust the logo size based on the image dimensions
@@ -155,8 +155,10 @@ if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic
             # Display the result
             if prediction == 1:
                 st.error(f'Prediction for Study ID {study_id}: HIGH Risk of Gestational Diabetes')
+                st.write("This result indicates a high risk of developing gestational diabetes. Flag for OGTT at week 16")
             else:
                 st.success(f'Prediction for Study ID {study_id}: LOW Risk of Gestational Diabetes')
+                st.write("This result indicates a low risk of developing gestational diabetes. Please follow regular prenatal care.")
 
         except Exception as e:
             st.write(f"Error during preprocessing or prediction: {str(e)}")
