@@ -26,7 +26,7 @@ def upload_to_s3(data, file_name):
     csv_buffer = StringIO()
     data.to_csv(csv_buffer)
     s3_client.put_object(Bucket=BUCKET_NAME, Key=file_name, Body=csv_buffer.getvalue())
-    st.success(f'File {file_name} uploaded to S3 successfully!')
+    st.markdown(f'File {file_name} uploaded to S3 successfully!')
 
 # Add Coombe Logo at the Top
 st.image('coombe2.jpeg', use_column_width=True)  # Adjust the logo size based on the image dimensions
