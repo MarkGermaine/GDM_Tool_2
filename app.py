@@ -155,7 +155,7 @@ if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic
             # Display the result
             if prediction == 1:
                 st.error(f'Prediction for Study ID {study_id}: **HIGH Risk of Gestational Diabetes**')
-                st.write("This result indicates a high risk of developing gestational diabetes. Flag for OGTT at week 16")
+                st.write("This result indicates a high risk of developing gestational diabetes. **Flag for OGTT at week 16**")
             else:
                 st.success(f'Prediction for Study ID {study_id}: **LOW Risk of Gestational Diabetes**')
                 st.write("This result indicates a low risk of developing gestational diabetes. Please follow regular prenatal care.")
