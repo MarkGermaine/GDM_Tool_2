@@ -57,7 +57,7 @@ systolic_bp = st.number_input('Systolic Blood Pressure at Booking', min_value=20
 diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=20, max_value=200, step=1, value=None)
 
 # Parity (stored as int64)
-parity = st.number_input('Parity (excluding multiple)', min_value=0, max_value=20, step=1, value=None)
+parity = st.number_input('Parity', min_value=0, max_value=20, step=1, value=None)
 
 # Hx_GDM (stored as int64: 1 for YES, 0 for NO)
 hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['Select', 'YES', 'NO'])
