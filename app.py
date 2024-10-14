@@ -60,12 +60,12 @@ diastolic_bp = st.number_input('Diastolic Blood Pressure at Booking', min_value=
 parity = st.number_input('Parity', min_value=0, max_value=20, step=1, value=None)
 
 # Hx_GDM (stored as int64: 1 for YES, 0 for NO)
-hx_gdm = st.selectbox('History of Gestational Diabetes (Hx_GDM)', ['Select', 'YES', 'NO'])
+hx_gdm = st.selectbox('History of Gestational Diabetes', ['Select', 'YES', 'NO'])
 hx_gdm_numeric = 1 if hx_gdm == 'YES' else 0 if hx_gdm == 'NO' else None
 
 
 # FH Diabetes (stored as object)
-fh_diabetes = st.selectbox('Family History of Diabetes (FH Diabetes)', ['Select', 'YES', 'NO'])
+fh_diabetes = st.selectbox('Family History of Diabetes', ['Select', 'YES', 'NO'])
 
 # Ethnic origin selection (stored as object in model)
 ethnic_origin = st.selectbox('Ethnic Origin of Patient', 
