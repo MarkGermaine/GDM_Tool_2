@@ -6,8 +6,8 @@ from io import StringIO
 import boto3
 
 # Load the saved preprocessor and model
-preprocessor = joblib.load('preprocessor_gdm.pkl')
-model = joblib.load('best_logistic_regression_model.pkl')
+preprocessor = joblib.load('preprocessor_gdm_2.pkl')
+model = joblib.load('best_logistic_regression_model_2.pkl')
 
 
 # Access AWS credentials securely from Streamlit secrets
@@ -82,25 +82,6 @@ with st.expander("What does each ethnicity represent?"):
     """)
 
 
-# Skill level
-skill_level_display = st.selectbox('Skill Level', 
-                                   ['Select', 
-                                    '0 - Unemployed', 
-                                    '1 - Elementary occupations', 
-                                    '2 - Clerical support workers/Skilled workers/Assemblers',
-                                    '3 - Technicians', 
-                                    '4 - Managers and Professionals'])
-skill_level = int(skill_level_display.split(" ")[0]) if skill_level_display != 'Select' else None
-
-with st.expander("What do the skill levels represent?"):
-    st.markdown("""
-    - **Skill Level 4**: Professionals and Managers (ISCO classification)
-    - **Skill Level 3**: Technicians
-    - **Skill Level 2**: Clerical Workers, Service/Sales workers, Skilled agriculture/forestry/fishery, Crafts and tradesmen, and Plant machine operators
-    - **Skill Level 1**: Elementary occupations
-    - **Skill Level 0**: Unemployed
-    """)
-
 # Other Endocrine problems
 other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['Select', 'YES', 'NO'])
 other_endocrine_probs_numeric = 1 if other_endocrine_probs == 'YES' else 0 if other_endocrine_probs == 'NO' else None
@@ -135,7 +116,6 @@ if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic
         input_data = pd.DataFrame({
             'Ethnic Origin of Patient': [ethnic_origin],
             'Age at booking': [age_at_booking],
-            'Skill Level': [skill_level],
             'Hx_GDM': [hx_gdm_numeric],
             'BMI': [bmi],
             'FH Diabetes': [fh_diabetes],
