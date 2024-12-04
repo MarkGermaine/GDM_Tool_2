@@ -105,10 +105,10 @@ with st.expander("What should the clinician's prediction be based on?"):
     """)
 
 
-# Ensure all fields are filled
+# Ensure all fields are filled (except clinician prediction which is now optional)
 if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic_bp and diastolic_bp and parity and 
     hx_gdm_numeric is not None and fh_diabetes != 'Select' and ethnic_origin != 'Select' and 
-    other_endocrine_probs_numeric is not None and clinician_prediction_value is not None):
+    other_endocrine_probs_numeric is not None):
 
 
     # Button to make prediction (only enabled if all fields are filled)
