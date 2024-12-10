@@ -106,12 +106,11 @@ with st.expander("What should the clinician's prediction be based on?"):
 
 
 # Ensure all fields are filled (except clinician prediction which is now optional)
-if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic_bp and diastolic_bp and parity and 
-    hx_gdm_numeric is not None and fh_diabetes != 'Select' and ethnic_origin != 'Select' and 
+if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic_bp and diastolic_bp and 
+    parity is not None and hx_gdm_numeric is not None and fh_diabetes != 'Select' and ethnic_origin != 'Select' and 
     other_endocrine_probs_numeric is not None):
 
-
-    # Button to make prediction (only enabled if all fields are filled)
+    # Button to make prediction (only enabled if required fields are filled)
     if st.button('Predict Gestational Diabetes'):
         # Create a DataFrame for the input data with the correct format and column names
         input_data = pd.DataFrame({
@@ -144,12 +143,15 @@ if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic
         except Exception as e:
             st.write(f"Error during preprocessing or prediction: {str(e)}")
 
-        # Store study_id, prediction (binary 0/1), and clinician's prediction for S3
+        # Store study_id and prediction for S3
         output_data = pd.DataFrame({
             'Study Participant ID': [study_id],
-            'ML Prediction': [prediction],
-            'Clinician Prediction': [clinician_prediction_value]
+            'ML Prediction': [prediction]
         })
+
+        # Include clinician prediction if provided
+        if clinician_prediction_value is not None:
+            output_data['Clinician Prediction'] = clinician_prediction_value
 
         # Upload to S3
         csv_file_name = f'GDM_prediction_{study_id}.csv'
@@ -168,7 +170,7 @@ if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic
         )
 
 else:
-    st.warning("Please fill out all the fields before making a prediction.")
+    st.warning("Please fill out all the required fields before making a prediction.")
 
 # Add CRT Machine Learning Banner at the Bottom
 st.image('CRT Machine Learning Lock Up Banner 10-07-20.jpeg', use_column_width=True)
