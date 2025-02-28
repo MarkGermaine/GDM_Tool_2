@@ -8,7 +8,7 @@ preprocessor = joblib.load('preprocessor_gdm_2.pkl')
 model = joblib.load('best_logistic_regression_model_2.pkl')
 
 # Add Coombe Logo at the Top
-st.image('ML-Labs logo_transparent.png', use_column_width=True)
+st.image('ML-Labs logo_transparent.png', use_container_width=True)
 
 st.markdown("### Gestational Diabetes Prediction Tool")
 
@@ -81,4 +81,4 @@ else:
     st.warning("Please fill out all the required fields before making a prediction.")
 
 # Add CRT Machine Learning Banner at the Bottom
-st.image('MLLABS-LOGO-PARTNERS.png', use_column_width=True)
+st.image('MLLABS-LOGO-PARTNERS.png', use_container_width=True)
