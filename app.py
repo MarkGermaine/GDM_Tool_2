@@ -82,10 +82,10 @@ if (height_cm and weight_kg and bmi and age_at_booking and systolic_bp and diast
             # Display the result
             if prediction == 1:
                 st.error("Prediction: **HIGH Risk of Gestational Diabetes**")
-                st.write("This result indicates a high risk of developing gestational diabetes. **Flag for OGTT at week 16**")
+                st.write("This result indicates a high risk of developing gestational diabetes.")
             else:
                 st.success("Prediction: **LOW Risk of Gestational Diabetes**")
-                st.write("This result indicates a low risk of developing gestational diabetes. Please follow regular prenatal care.")
+                st.write("This result indicates a low risk of developing gestational diabetes.")
 
         except Exception as e:
             st.write(f"Error during preprocessing or prediction: {str(e)}")
