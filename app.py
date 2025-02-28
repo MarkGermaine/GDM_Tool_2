@@ -8,12 +8,9 @@ preprocessor = joblib.load('preprocessor_gdm_2.pkl')
 model = joblib.load('best_logistic_regression_model_2.pkl')
 
 # Add Coombe Logo at the Top
-st.image('ML-Labs logo_transparent.png', use_container_width=True)
+st.image('coombe2.jpeg', use_container_width=True)
 
 st.markdown("### Gestational Diabetes Prediction Tool")
-
-# Capture unique identifier (optional, used for tracking purposes)
-study_id = st.text_input('Study Participant ID', '')
 
 # Collect Height and Weight, then calculate BMI
 height_cm = st.number_input('Height (in cm)', min_value=100.0, max_value=250.0, step=0.1, value=None)
@@ -40,11 +37,8 @@ ethnic_origin = st.selectbox('Ethnic Origin of Patient', ['Select','CAUCASIAN', 
 other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['Select', 'YES', 'NO'])
 other_endocrine_probs_numeric = 1 if other_endocrine_probs == 'YES' else 0 if other_endocrine_probs == 'NO' else None
 
-clinician_prediction = st.selectbox('Clinician Prediction of Gestational Diabetes', ['Select', 'High Risk', 'Low Risk'])
-clinician_prediction_value = 1 if clinician_prediction == 'High Risk' else 0 if clinician_prediction == 'Low Risk' else None
-
-# Ensure all fields are filled (except clinician prediction which is optional)
-if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic_bp and diastolic_bp and 
+# Ensure all fields are filled
+if (height_cm and weight_kg and bmi and age_at_booking and systolic_bp and diastolic_bp and 
     parity is not None and hx_gdm_numeric is not None and fh_diabetes != 'Select' and ethnic_origin != 'Select' and 
     other_endocrine_probs_numeric is not None):
     
@@ -69,10 +63,10 @@ if (study_id and height_cm and weight_kg and bmi and age_at_booking and systolic
 
             # Display the result
             if prediction == 1:
-                st.error(f'Prediction for Study ID {study_id}: **HIGH Risk of Gestational Diabetes**')
+                st.error("Prediction: **HIGH Risk of Gestational Diabetes**")
                 st.write("This result indicates a high risk of developing gestational diabetes. **Flag for OGTT at week 16**")
             else:
-                st.success(f'Prediction for Study ID {study_id}: **LOW Risk of Gestational Diabetes**')
+                st.success("Prediction: **LOW Risk of Gestational Diabetes**")
                 st.write("This result indicates a low risk of developing gestational diabetes. Please follow regular prenatal care.")
 
         except Exception as e:
@@ -81,4 +75,4 @@ else:
     st.warning("Please fill out all the required fields before making a prediction.")
 
 # Add CRT Machine Learning Banner at the Bottom
-st.image('MLLABS-LOGO-PARTNERS.png', use_container_width=True)
+st.image('CRT Machine Learning Lock Up Banner 10-07-20.jpeg', use_container_width=True)
