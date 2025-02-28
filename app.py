@@ -75,4 +75,4 @@ else:
     st.warning("Please fill out all the required fields before making a prediction.")
 
 # Add CRT Machine Learning Banner at the Bottom
-st.image('MLMLLABS-LOGO-Partners.png', use_container_width=True)
+st.image('MLLABS-LOGO-Partners.png', use_container_width=True)
