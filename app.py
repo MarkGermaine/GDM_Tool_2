@@ -34,8 +34,26 @@ hx_gdm_numeric = 1 if hx_gdm == 'YES' else 0 if hx_gdm == 'NO' else None
 fh_diabetes = st.selectbox('Family History of Diabetes', ['Select', 'YES', 'NO'])
 ethnic_origin = st.selectbox('Ethnic Origin of Patient', ['Select','CAUCASIAN', 'SOUTH EAST ASIAN', 'OTHER', 'BLACK', 'ASIAN', 'MIDDLE EASTERN'])
 
+with st.expander("What does each ethnicity represent?"):
+    st.markdown("""
+    - **Caucasian**: All white Europeans and Northern Americans
+    - **Black**: All Africans and Afro-Caribbean
+    - **South East Asian**: Includes Pakistan, India, Malaysia, Singapore, etc.
+    - **Asian**: Includes China, Japan, North and South Korea, Mongolia, etc.
+    - **Middle Eastern**: Middle East and Northern African regions
+    - **Other**: All other ethnicities (e.g., Latin American, Mixed, etc.)
+    """)
+
 other_endocrine_probs = st.selectbox('Other Endocrine Problems', ['Select', 'YES', 'NO'])
 other_endocrine_probs_numeric = 1 if other_endocrine_probs == 'YES' else 0 if other_endocrine_probs == 'NO' else None
+
+with st.expander("What are considered 'Other Endocrine Problems'?"):
+    st.markdown("""
+    Other endocrine problems include conditions such as:
+    - **PCOS** (Polycystic Ovary Syndrome)
+    - **Thyroid problems** (e.g., hypothyroidism, hyperthyroidism)
+    - Any other endocrine-related disorders
+    """)
 
 # Ensure all fields are filled
 if (height_cm and weight_kg and bmi and age_at_booking and systolic_bp and diastolic_bp and 
@@ -71,8 +89,6 @@ if (height_cm and weight_kg and bmi and age_at_booking and systolic_bp and diast
 
         except Exception as e:
             st.write(f"Error during preprocessing or prediction: {str(e)}")
-else:
-    st.warning("Please fill out all the required fields before making a prediction.")
 
 # Add CRT Machine Learning Banner at the Bottom
 st.image('MLLABS-LOGO-PARTNERS.png', use_container_width=True)
